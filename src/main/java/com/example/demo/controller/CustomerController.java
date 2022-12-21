@@ -13,12 +13,9 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    private final CustomerRegistrationService customerRegistrationService;
-
     @Autowired
-    public CustomerController(CustomerService customerService, CustomerRegistrationService customerRegistrationService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.customerRegistrationService = customerRegistrationService;
     }
 
 

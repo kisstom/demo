@@ -3,6 +3,7 @@ package com.example.demo.persistance;
 import lombok.Builder;
 
 import javax.persistence.*;
+import javax.swing.*;
 
 @Entity(name="customer")
 public class Customer {
@@ -17,6 +18,12 @@ public class Customer {
 
     @Column(name = "age")
     private int age;
+
+    @Column(name = "password")
+    private String password;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Authority authority;
 
     public Long getId() {
         return id;
@@ -40,5 +47,25 @@ public class Customer {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    public enum Authority {
+        USER, ADMIN;
     }
 }

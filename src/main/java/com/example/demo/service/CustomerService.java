@@ -6,6 +6,7 @@ import com.example.demo.model.RegisterCustomerRequest;
 import com.example.demo.persistance.Customer;
 import com.example.demo.persistance.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,14 +16,14 @@ public class CustomerService {
 
     private final CustomerRepo customerRepo;
 
-    private final CustomerRegistrationService customerRegistrationService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public CustomerService(MapStructMapper mapStructMapper, CustomerRepo customerRepo,
-                           CustomerRegistrationService customerRegistrationService) {
+                           PasswordEncoder passwordEncoder) {
         this.mapStructMapper = mapStructMapper;
         this.customerRepo = customerRepo;
-        this.customerRegistrationService = customerRegistrationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public CustomerDto getCustomer(long id) {
@@ -33,8 +34,8 @@ public class CustomerService {
         Customer c = new Customer();
         c.setName(registerCustomerRequest.getName());
         c.setAge(registerCustomerRequest.getAge());
-        Customer saved = customerRepo.save(c);
-        customerRegistrationService.createCustomerSecret(registerCustomerRequest, saved.getId());
-        return mapStructMapper.customerToCustomerDto(saved);
+        c.setPassword(passwordEncoder.encode(registerCustomerRequest.getPassword()));
+        c.setAuthority(Customer.Authority.USER);
+        return mapStructMapper.customerToCustomerDto(customerRepo.save(c));
     }
 }
