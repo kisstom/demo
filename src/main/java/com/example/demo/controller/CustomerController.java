@@ -22,8 +22,8 @@ public class CustomerController {
         return customerService.getCustomer(id);
     }
 
-    @PostMapping
-    public CustomerDto createCustomer(CustomerDto customerDto) {
+    @PostMapping(produces = "application/json")
+    public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
         return customerService.createCustomer(customerDto);
     }
 }

@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.mapper.MapStructMapper;
 import com.example.demo.model.CustomerDto;
 import com.example.demo.persistance.CustomerRepo;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
