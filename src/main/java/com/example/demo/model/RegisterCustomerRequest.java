@@ -1,19 +1,9 @@
 package com.example.demo.model;
 
-import org.springframework.lang.Nullable;
-
-public class CustomerDto {
-    private Long id;
+public class RegisterCustomerRequest {
     private String name;
     private int age;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(@Nullable Long id) {
-        this.id = id;
-    }
+    private String password;
 
     public String getName() {
         return name;
@@ -30,5 +20,12 @@ public class CustomerDto {
     public void setAge(int age) {
         this.age = age;
     }
-}
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}

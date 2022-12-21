@@ -1,5 +1,7 @@
 package com.example.demo.persistance;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity(name="customer")
