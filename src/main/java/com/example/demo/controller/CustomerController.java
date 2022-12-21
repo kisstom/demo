@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CustomerDto;
 import com.example.demo.model.RegisterCustomerRequest;
-import com.example.demo.service.CustomerRegistrationService;
 import com.example.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

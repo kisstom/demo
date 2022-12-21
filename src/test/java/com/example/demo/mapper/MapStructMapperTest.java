@@ -1,7 +1,5 @@
 package com.example.demo.mapper;
 
-import com.example.demo.controller.CustomerController;
-import com.example.demo.mapper.MapStructMapper;
 import com.example.demo.model.CustomerDto;
 import com.example.demo.persistance.Customer;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,7 @@ class MapStructMapperTest {
 	private MapStructMapper mapStructMapper;
 
 	@Test
-	void testMapStruct() {
+	void testCustomerDtoToCustomer() {
 		long id = 1;
 		int age = 12;
 		String name = "jozsi";
@@ -30,6 +28,22 @@ class MapStructMapperTest {
 		assertEquals(id, customer.getId());
 		assertEquals(age, customer.getAge());
 		assertEquals(name, customer.getName());
+	}
+
+	@Test
+	void testCustomerToCustomerDto() {
+		long id = 1;
+		int age = 12;
+		String name = "jozsi";
+		Customer customer = new Customer();
+		customer.setAge(age);
+		customer.setId(id);
+		customer.setName(name);
+
+		CustomerDto customerDto = mapStructMapper.customerToCustomerDto(customer);
+		assertEquals(id, customerDto.getId());
+		assertEquals(age, customerDto.getAge());
+		assertEquals(name, customerDto.getName());
 	}
 
 }

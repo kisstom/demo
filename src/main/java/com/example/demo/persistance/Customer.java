@@ -5,6 +5,7 @@ import lombok.Builder;
 import javax.persistence.*;
 import javax.swing.*;
 
+
 @Entity(name="customer")
 public class Customer {
 
