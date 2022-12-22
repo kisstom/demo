@@ -1,11 +1,15 @@
 package com.example.demo.persistance;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity(name="customer")
 public class Customer {

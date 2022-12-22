@@ -62,10 +62,10 @@ public class CustomerControllerTest {
 
         Gson gson = new Gson();
 
-        RegisterCustomerRequest registerCustomerRequest = new RegisterCustomerRequest();
-        registerCustomerRequest.setName(name);
-        registerCustomerRequest.setAge(age);
-        registerCustomerRequest.setPassword(password);
+        RegisterCustomerRequest registerCustomerRequest = RegisterCustomerRequest.builder()
+                .name(name)
+                .age(age)
+                .password(password).build();
 
         CustomerDto customerDto = CustomerDto.builder()
                 .id(1L)
