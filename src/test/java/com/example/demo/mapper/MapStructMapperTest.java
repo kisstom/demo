@@ -19,10 +19,11 @@ class MapStructMapperTest {
 		long id = 1;
 		int age = 12;
 		String name = "jozsi";
-		CustomerDto customerDto = new CustomerDto();
-		customerDto.setAge(age);
-		customerDto.setId(id);
-		customerDto.setName(name);
+		CustomerDto customerDto = CustomerDto.builder()
+				.age(age)
+				.id(id)
+				.name(name)
+				.build();
 
 		Customer customer = mapStructMapper.customerDtoToCustomer(customerDto);
 		assertEquals(id, customer.getId());

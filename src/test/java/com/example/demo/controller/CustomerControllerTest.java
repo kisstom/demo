@@ -52,10 +52,10 @@ public class CustomerControllerTest {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 RegisterCustomerRequest registerCustomerRequest = (RegisterCustomerRequest) invocationOnMock.getArgument(0);
-                CustomerDto customerDto = new CustomerDto();
-                customerDto.setAge(registerCustomerRequest.getAge());
-                customerDto.setName(registerCustomerRequest.getName());
-                customerDto.setId(1L);
+                CustomerDto customerDto = CustomerDto.builder()
+                        .age(registerCustomerRequest.getAge())
+                        .name(registerCustomerRequest.getName())
+                        .id(1L).build();
                 return customerDto;
             }
         }).when(customerService).createCustomer(any());
@@ -67,10 +67,10 @@ public class CustomerControllerTest {
         registerCustomerRequest.setAge(age);
         registerCustomerRequest.setPassword(password);
 
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(1L);
-        customerDto.setName(name);
-        customerDto.setAge(age);
+        CustomerDto customerDto = CustomerDto.builder()
+                .id(1L)
+                .name(name)
+                .age(age).build();
 
         String json = gson.toJson(registerCustomerRequest);
 
