@@ -31,11 +31,12 @@ public class CustomerService {
     }
 
     public CustomerDto createCustomer(RegisterCustomerRequest registerCustomerRequest) {
-        Customer c = new Customer();
-        c.setName(registerCustomerRequest.getName());
-        c.setAge(registerCustomerRequest.getAge());
-        c.setPassword(passwordEncoder.encode(registerCustomerRequest.getPassword()));
-        c.setAuthority(Customer.Authority.USER);
+        Customer c = Customer.builder()
+                .age(registerCustomerRequest.getAge())
+                .name(registerCustomerRequest.getName())
+                .password(passwordEncoder.encode(registerCustomerRequest.getPassword()))
+                .authority(Customer.Authority.USER)
+                .build();
         return mapStructMapper.customerToCustomerDto(customerRepo.save(c));
     }
 }
