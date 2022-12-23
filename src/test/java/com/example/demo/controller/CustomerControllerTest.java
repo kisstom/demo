@@ -4,6 +4,8 @@ import com.example.demo.config.SecurityConfig;
 import com.example.demo.model.CustomerDto;
 import com.example.demo.model.RegisterCustomerRequest;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.OrderService;
+import com.example.demo.service.ProductService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +42,12 @@ public class CustomerControllerTest {
 
     @MockBean
     private UserDetailsService userDetailsService;
+
+    @MockBean
+    private OrderService orderService;
+
+    @MockBean
+    private ProductService productService;
 
     @Test
     public void testPost() throws Exception {

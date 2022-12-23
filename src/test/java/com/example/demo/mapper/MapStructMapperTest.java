@@ -1,7 +1,9 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.CustomerDto;
+import com.example.demo.model.ProductDto;
 import com.example.demo.persistance.Customer;
+import com.example.demo.persistance.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,4 +50,20 @@ class MapStructMapperTest {
 		assertEquals(name, customerDto.getName());
 	}
 
+	@Test
+	public void testProductToProductDto() {
+		String json = "";
+		String name = "name";
+		long id = 1;
+		Product product = Product.builder()
+				.attributesJson(json)
+				.name(name)
+				.id(id)
+				.build();
+
+		ProductDto productDto = mapStructMapper.productToProductDto(product);
+		assertEquals(json, productDto.getAttributesJson());
+		assertEquals(name, productDto.getName());
+		assertEquals(id, productDto.getId());
+	}
 }

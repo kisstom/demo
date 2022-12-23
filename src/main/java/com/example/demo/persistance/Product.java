@@ -6,34 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name="customer")
-public class Customer {
+@Entity(name="product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "attributes")
+    private String attributesJson;
 
-    @Column(name = "password")
-    private String password;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "authority")
-    private Authority authority;
-
-    public enum Authority {
-        USER, ADMIN;
-    }
 }
-

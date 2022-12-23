@@ -6,7 +6,6 @@ import com.example.demo.model.RegisterCustomerRequest;
 import com.example.demo.persistance.Customer;
 import com.example.demo.persistance.CustomerRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
