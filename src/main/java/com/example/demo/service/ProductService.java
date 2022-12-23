@@ -21,7 +21,7 @@ public class ProductService {
         return mapStructMapper.productToProductDto(product);
     }
 
-    public ProductDto createOrder(CreateProductRequest createProductRequest) {
+    public ProductDto createProduct(CreateProductRequest createProductRequest) {
         Product product = Product.builder()
                 .name(createProductRequest.getName())
                 .attributesJson(createProductRequest.getAttributesJson())

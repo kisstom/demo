@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.persistance.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,8 @@ public class SecurityConfig  {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**")
-                .hasRole("ADMIN")
+                .antMatchers("/api/v1/products/add")
+                .hasAuthority(Customer.Authority.ADMIN.name())
                 .antMatchers("/api/v1/customers/register")
                 .permitAll()
                 .anyRequest()

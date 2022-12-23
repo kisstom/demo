@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,20 +30,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = SecurityConfig.class)
-@WebMvcTest(controllers = {OrderController.class})
-@ComponentScan(basePackages = "com.example.demo")
+@WebMvcTest(OrderController.class)
+@Import({SecurityConfig.class})
 public class OrderControllerTest {
 
     private static long CUSTOMER_ID = 1;
@@ -56,16 +51,10 @@ public class OrderControllerTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @MockBean
-    private CustomerService customerService;
-
-    @MockBean
     private UserDetailsService userDetailsService;
 
     @MockBean
     private OrderService orderService;
-
-    @MockBean
-    private ProductService productService;
 
     @BeforeEach
     public void setup() {
@@ -83,10 +72,11 @@ public class OrderControllerTest {
         Gson gson = new Gson();
         String json = gson.toJson(Order.OrderStatus.SUBMITTED);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/api/v1/orders/update_status/1")
+        MvcResult mvcResult = mockMvc.perform(patch("/api/v1/orders/update_status/" + CUSTOMER_ID)
                 .with(httpBasic(Long.toString(CUSTOMER_ID), PASSWORD))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
 

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/v1/products")
+@RequestMapping(path = "/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -18,8 +18,8 @@ public class ProductController {
         return productService.getProduct(id);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ProductDto createProduct(@RequestBody CreateProductRequest createProductRequest) {
-        return productService.createOrder(createProductRequest);
+        return productService.createProduct(createProductRequest);
     }
 }

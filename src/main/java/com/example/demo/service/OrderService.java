@@ -28,7 +28,6 @@ public class OrderService {
                 .orderStatus(order.getOrderStatus()).build();
     }
 
-    @Transactional
     public OrderDto createOrder(CreateOrderRequest createOrderRequest) {
         Customer customer = customerRepo.findById(createOrderRequest.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Unknown customer id: " + createOrderRequest.getCustomerId()));
