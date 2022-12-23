@@ -14,12 +14,12 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping(path = "/{id}")
-    public ProductDto getOrder(@PathVariable long id) {
+    public ProductDto getProduct(@PathVariable long id) {
         return productService.getProduct(id);
     }
 
     @PostMapping
-    public ProductDto createOrder(@RequestBody CreateProductRequest createProductRequest) {
+    public ProductDto createProduct(@RequestBody CreateProductRequest createProductRequest) {
         return productService.createOrder(createProductRequest);
     }
 }

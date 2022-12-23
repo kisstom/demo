@@ -59,4 +59,15 @@ public class OrderService {
                 .orderStatus(savedOrder.getOrderStatus())
                 .customerId(savedOrder.getCustomer().getId()).build();
     }
+
+    @Transactional
+    public OrderDto updateStatus(long id, Order.OrderStatus status) {
+        Order order = orderRepo.findById(id).orElseThrow(() -> new RuntimeException("Unknown order id: " + id));
+        order.setOrderStatus(status);
+        Order savedOrder = orderRepo.save(order);
+        return OrderDto.builder()
+                .id(savedOrder.getId())
+                .orderStatus(savedOrder.getOrderStatus())
+                .customerId(savedOrder.getCustomer().getId()).build();
+    }
 }

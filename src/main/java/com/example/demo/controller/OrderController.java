@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CreateOrderRequest;
 import com.example.demo.model.OrderDto;
+import com.example.demo.persistance.Order;
 import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,11 @@ public class OrderController {
     @GetMapping(path = "/{id}")
     public OrderDto getOrder(@PathVariable int id) {
         return orderService.getOrder(id);
+    }
+
+    @PatchMapping("/update_status/{id}")
+    public OrderDto updateStatus(@PathVariable long id, @RequestBody Order.OrderStatus status) {
+        return orderService.updateStatus(id, status);
     }
 
     @PostMapping
