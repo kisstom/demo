@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.mapper.MapStructMapper;
 import com.example.demo.model.CreateProductRequest;
 import com.example.demo.model.ProductDto;
@@ -17,7 +18,7 @@ public class ProductService {
     private final MapStructMapper mapStructMapper;
 
     public ProductDto getProduct(long id) {
-        Product product = productRepo.findById(id).orElseThrow(() -> new RuntimeException("Unknown product id: " + id));
+        Product product = productRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unknown product id: " + id));
         return mapStructMapper.productToProductDto(product);
     }
 

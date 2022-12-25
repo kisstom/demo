@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.model.CreateOrderRequest;
 import com.example.demo.model.OrderDto;
 import com.example.demo.persistance.*;
@@ -21,7 +22,7 @@ public class OrderService {
     private final CustomerRepo customerRepo;
 
     public OrderDto getOrder(long id) {
-        Order order = orderRepo.findById(id).orElseThrow(() -> new RuntimeException("Unknown order id: " + id));
+        Order order = orderRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unknown order id: " + id));
         return OrderDto.builder()
                 .id(order.getId())
                 .customerId(order.getCustomer().getId())
@@ -30,7 +31,7 @@ public class OrderService {
 
     public OrderDto createOrder(CreateOrderRequest createOrderRequest) {
         Customer customer = customerRepo.findById(createOrderRequest.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Unknown customer id: " + createOrderRequest.getCustomerId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Unknown customer id: " + createOrderRequest.getCustomerId()));
 
         Order order = Order.builder()
                 .orderStatus(Order.OrderStatus.CART)
@@ -39,7 +40,7 @@ public class OrderService {
 
         List<OrderItem> orderItems = createOrderRequest.getOrderItems().stream().map(orderItemDto -> {
             Product product = productRepo.findById(orderItemDto.getProductId()).
-                    orElseThrow(() -> new RuntimeException("Unknown product id: " + orderItemDto.getProductId()));
+                    orElseThrow(() -> new ResourceNotFoundException("Unknown product id: " + orderItemDto.getProductId()));
 
             return OrderItem.builder()
                     .amount(orderItemDto.getAmount())
@@ -61,7 +62,7 @@ public class OrderService {
 
     @Transactional
     public OrderDto updateStatus(long id, Order.OrderStatus status) {
-        Order order = orderRepo.findById(id).orElseThrow(() -> new RuntimeException("Unknown order id: " + id));
+        Order order = orderRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unknown order id: " + id));
         order.setOrderStatus(status);
         Order savedOrder = orderRepo.save(order);
         return OrderDto.builder()

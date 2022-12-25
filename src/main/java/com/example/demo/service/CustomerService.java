@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.mapper.MapStructMapper;
 import com.example.demo.model.CustomerDto;
 import com.example.demo.model.RegisterCustomerRequest;
@@ -20,7 +21,8 @@ public class CustomerService {
     private final PasswordEncoder passwordEncoder;
 
     public CustomerDto getCustomer(long id) {
-        return mapStructMapper.customerToCustomerDto(customerRepo.findById(id).get());
+        return mapStructMapper.customerToCustomerDto(customerRepo.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Unknown customer id: " + id)));
     }
 
     public CustomerDto createCustomer(RegisterCustomerRequest registerCustomerRequest) {
