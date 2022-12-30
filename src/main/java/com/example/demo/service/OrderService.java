@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.common.exception.ResourceNotFoundException;
 import com.example.demo.model.CreateOrderRequest;
 import com.example.demo.model.OrderDto;
+import com.example.demo.model.OrderItemDto;
 import com.example.demo.persistance.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,22 +31,16 @@ public class OrderService {
     }
 
     public OrderDto createOrder(CreateOrderRequest createOrderRequest) {
-        Customer customer = customerRepo.findById(createOrderRequest.getCustomerId())
-                .orElseThrow(() -> new ResourceNotFoundException("Unknown customer id: " + createOrderRequest.getCustomerId()));
-
         Order order = Order.builder()
                 .orderStatus(Order.OrderStatus.CART)
-                .customer(customer)
+                .customer(customerRepo.getReferenceById(createOrderRequest.getCustomerId()))
                 .build();
 
         List<OrderItem> orderItems = createOrderRequest.getOrderItems().stream().map(orderItemDto -> {
-            Product product = productRepo.findById(orderItemDto.getProductId()).
-                    orElseThrow(() -> new ResourceNotFoundException("Unknown product id: " + orderItemDto.getProductId()));
-
             return OrderItem.builder()
                     .amount(orderItemDto.getAmount())
                     .price(orderItemDto.getPrice())
-                    .product(product)
+                    .product(productRepo.getReferenceById(orderItemDto.getProductId()))
                     .order(order)
                     .build();
 
@@ -69,5 +64,27 @@ public class OrderService {
                 .id(savedOrder.getId())
                 .orderStatus(savedOrder.getOrderStatus())
                 .customerId(savedOrder.getCustomer().getId()).build();
+    }
+
+    @Transactional
+    public OrderDto addToCart(long id, OrderItemDto orderItemDto) {
+        Order order = orderRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unknown order id: " + id));
+        if (order.getOrderStatus() != Order.OrderStatus.CART) {
+            throw new RuntimeException();
+        }
+
+        OrderItem orderItem = OrderItem.builder()
+                .product(productRepo.getReferenceById(orderItemDto.getProductId()))
+                .order(orderRepo.getReferenceById(id))
+                .price(orderItemDto.getPrice())
+                .amount(orderItemDto.getAmount())
+                .build();
+        order.addOrderItem(orderItem);
+        Order savedOrder = orderRepo.save(order);
+        return OrderDto.builder()
+                .id(savedOrder.getId())
+                .customerId(savedOrder.getCustomer().getId())
+                .orderStatus(savedOrder.getOrderStatus())
+                .build();
     }
 }

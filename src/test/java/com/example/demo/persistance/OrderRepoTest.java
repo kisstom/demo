@@ -66,4 +66,38 @@ public class OrderRepoTest {
         orderRepo.delete(order);
         assertFalse(orderItemRepo.findById(saved.getOrderItems().get(0).getId()).isPresent());
     }
+
+    /*@Test
+    public void test2() {
+        Product p = Product.builder()
+                .attributesJson("lofasz")
+                .name("MacBook")
+                .build();
+        productRepo.save(p);
+
+        Customer c = Customer.builder()
+                .authority(Customer.Authority.USER)
+                .password("secret")
+                .name("Jozsi")
+                .age(12)
+                .build();
+        customerRepo.save(c);
+
+        Order order = Order.builder()
+                .orderStatus(Order.OrderStatus.SUBMITTED)
+                .customer(customerRepo.getReferenceById(c.getId()))
+                .build();
+        Order savedOrder = orderRepo.save(order);
+
+        OrderItem orderItem = OrderItem.builder()
+                .amount(5)
+                .price(10.0)
+                .order(savedOrder)
+                .product(p)
+                .build();
+        orderItemRepo.save(orderItem);
+        Order order1 = orderRepo.findById(savedOrder.getId()).get();
+
+        assertEquals(Arrays.asList(orderItem), order1.getOrderItems());
+    }*/
 }

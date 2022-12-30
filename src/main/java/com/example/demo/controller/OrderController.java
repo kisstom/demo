@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CreateOrderRequest;
 import com.example.demo.model.OrderDto;
+import com.example.demo.model.OrderItemDto;
 import com.example.demo.persistance.Order;
 import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class OrderController {
     @GetMapping(path = "/{id}")
     public OrderDto getOrder(@PathVariable int id) {
         return orderService.getOrder(id);
+    }
+
+    @PatchMapping(path = "/add_to_cart/{id}")
+    public OrderDto addToCart(@PathVariable long id, @RequestBody OrderItemDto orderItemDto) {
+        return orderService.addToCart(id, orderItemDto);
     }
 
     @PatchMapping("/update_status/{id}")
